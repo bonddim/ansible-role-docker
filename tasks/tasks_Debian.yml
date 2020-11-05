@@ -1,0 +1,18 @@
+---
+# docker tasks for Debian OS family
+- name: Install docker required packages
+  apt:
+    name: "{{ docker_required_packages }}"
+    state: present
+    update_cache: true
+
+- name: Add docker GPG key
+  apt_key:
+    url: "{{ docker_base_url }}/gpg"
+    state: present
+
+- name: Add docker repository
+  apt_repository:
+    repo: "{{ docker_repository }}"
+    state: present
+    mode: 0644
