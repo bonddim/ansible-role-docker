@@ -10,5 +10,3 @@ docker_deprecated_packages:
       - docker-latest-logrotate
       - docker-logrotate
       - docker-engine
-      - docker-engine-selinux
-      - docker-selinux
