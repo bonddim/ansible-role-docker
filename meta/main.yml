@@ -1,0 +1,38 @@
+---
+dependencies: []
+
+galaxy_info:
+  author: Dmytro Bondar
+  license: "license (MIT)"
+
+  role_name: docker
+  description: "Install Docker Engine on Linux"
+  github_branch: main
+
+  min_ansible_version: 2.9
+
+  platforms:
+    - name: Ubuntu
+      versions:
+        - 20.04
+        - 18.04
+        - 16.04
+    - name: Debian
+      versions:
+        - 10
+        - 9
+    - name: EL
+      versions:
+        - 8
+        - 7
+    - name: Fedora
+      versions:
+        - 32
+        - 31
+        - 30
+
+  galaxy_tags:
+    - docker
+    - engine
+    - containers
+    - linux
