@@ -5,3 +5,8 @@ docker_daemon_state: started
 docker_daemon_enable: true
 
 docker_users: []
+
+# docker-compose
+docker_compose_install: false
+docker_compose_install_path: /usr/local/bin/docker-compose
+docker_compose_version: latest

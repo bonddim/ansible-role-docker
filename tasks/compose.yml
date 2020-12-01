@@ -1,0 +1,27 @@
+---
+- name: Check current docker-compose version
+  command: docker-compose --version
+  register: compose_current_version
+  changed_when: false
+  failed_when: false
+
+- when: docker_compose_version == "latest"
+  block:
+  - name: Check latest docker-compose version
+    shell:
+      cmd: >
+        curl -sH "Accept: application/vnd.github.v3+json" https://api.github.com/repos/docker/compose/releases/latest | grep -Po '"tag_name": "\K.*?(?=")'
+      warn: false
+    changed_when: false
+    register: compose_latest_version
+
+  - name: Set docker-compose version number
+    set_fact:
+      docker_compose_version: "{{ compose_latest_version.stdout }}"
+
+- name: Install docker-compose binary
+  get_url:
+    url: "https://github.com/docker/compose/releases/download/{{ docker_compose_version }}/docker-compose-Linux-x86_64"
+    dest: "{{ docker_compose_install_path }}"
+    force: "{{ (docker_compose_version not in compose_current_version.stdout | default('')) | ternary(true, false) }}"
+    mode: 0755

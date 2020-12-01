@@ -29,3 +29,7 @@
     groups: docker
     append: true
   loop: "{{ docker_users }}"
+
+- name:
+  include_tasks: compose.yml
+  when: docker_compose_install | bool
