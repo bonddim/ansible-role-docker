@@ -7,17 +7,17 @@
 
 - when: docker_compose_version == "latest"
   block:
-  - name: Check latest docker-compose version
-    shell:
-      cmd: >
-        curl -sH "Accept: application/vnd.github.v3+json" https://api.github.com/repos/docker/compose/releases/latest | grep -Po '"tag_name": "\K.*?(?=")'
-      warn: false
-    changed_when: false
-    register: compose_latest_version
+    - name: Check latest docker-compose version
+      uri:
+        url: https://api.github.com/repos/docker/compose/releases/latest
+        method: GET
+        headers:
+          Accept: application/vnd.github.v3+json
+      register: compose_latest_version
 
-  - name: Set docker-compose version number
-    set_fact:
-      docker_compose_version: "{{ compose_latest_version.stdout }}"
+    - name: Set docker-compose version number
+      set_fact:
+        docker_compose_version: "{{ compose_latest_version.json.tag_name }}"
 
 - name: Install docker-compose binary
   get_url:
